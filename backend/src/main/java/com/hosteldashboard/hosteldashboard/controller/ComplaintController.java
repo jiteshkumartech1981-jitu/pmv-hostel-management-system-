@@ -37,7 +37,65 @@ public class ComplaintController {
     }
 
     /**
-     * Upload a short 20-second complaint video proof.
+     * Submit complaint with optional video in a single atomic multipart request.
+     */
+    @PostMapping(value = "/submit-with-video", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<?> submitComplaintWithVideo(
+            @RequestParam("studentName") String studentName,
+            @RequestParam("studentRollNumber") String studentRollNumber,
+            @RequestParam("category") String category,
+            @RequestParam("description") String description,
+            @RequestParam(value = "file", required = false) MultipartFile file,
+            Authentication authentication) {
+
+        Complaint complaint = new Complaint();
+        complaint.setStudentName(studentName);
+        complaint.setStudentRollNumber(studentRollNumber);
+        complaint.setCategory(category);
+        complaint.setDescription(description);
+        complaint.setStatus("Submitted");
+        complaint.setCreatedAt(LocalDateTime.now().format(FORMATTER));
+
+        if (file != null && !file.isEmpty()) {
+            try {
+                Path uploadPath = Paths.get(UPLOAD_DIR);
+                if (!Files.exists(uploadPath)) {
+                    Files.createDirectories(uploadPath);
+                }
+
+                String originalName = file.getOriginalFilename();
+                String extension = ".mp4";
+                if (originalName != null && originalName.lastIndexOf('.') != -1) {
+                    extension = originalName.substring(originalName.lastIndexOf('.'));
+                }
+
+                String fileName = "complaint_video_" + System.currentTimeMillis() + "_" + UUID.randomUUID().toString().substring(0, 8) + extension;
+                Path filePath = uploadPath.resolve(fileName);
+                Files.copy(file.getInputStream(), filePath);
+
+                complaint.setVideoUrl("/api/complaints/video/" + fileName);
+                complaint.setVideoDeleted(false);
+                complaint.setVideoViewedAt(null);
+            } catch (IOException e) {
+                return ResponseEntity.internalServerError().body(Map.of("error", "Failed to store video: " + e.getMessage()));
+            }
+        }
+
+        // Auto-fill student mobile if missing
+        if (complaint.getStudentRollNumber() != null && !complaint.getStudentRollNumber().isBlank()) {
+            studentRepository.findByRollNumber(complaint.getStudentRollNumber().trim().toUpperCase()).ifPresent(s -> {
+                if (complaint.getStudentMobile() == null || complaint.getStudentMobile().isBlank()) {
+                    complaint.setStudentMobile(s.getMobile());
+                }
+            });
+        }
+
+        Complaint saved = complaintRepository.save(complaint);
+        return ResponseEntity.ok(saved);
+    }
+
+    /**
+     * Upload a short 20-second complaint video proof (standalone).
      */
     @PostMapping(value = "/upload-video", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<?> uploadVideo(@RequestParam("file") MultipartFile file) {
@@ -86,7 +144,6 @@ public class ComplaintController {
             }
 
             // Mark complaint as viewed if not already marked
-            String targetUrl = "/api/complaints/video/" + fileName;
             complaintRepository.findAll().stream()
                     .filter(c -> c.getVideoUrl() != null && c.getVideoUrl().endsWith(fileName))
                     .findFirst()

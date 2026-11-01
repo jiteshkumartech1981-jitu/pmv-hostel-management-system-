@@ -2352,52 +2352,42 @@ class StudentDashboardScreen extends StatelessWidget {
                                             return;
                                           }
                                           setFormState(() => isSubmitting = true);
-
-                                          String? uploadedVideoUrl;
-                                          if (recordedVideo != null) {
-                                            try {
-                                              final uri = Uri.parse('$kBaseUrl/api/complaints/upload-video');
-                                              final req = http.MultipartRequest('POST', uri);
-                                              req.files.add(await http.MultipartFile.fromPath('file', recordedVideo!.path));
-                                              final sRes = await req.send().timeout(const Duration(seconds: 40));
-                                              final resp = await http.Response.fromStream(sRes);
-                                              if (resp.statusCode == 200) {
-                                                final data = json.decode(resp.body);
-                                                uploadedVideoUrl = data['videoUrl'];
-                                              }
-                                            } catch (_) {}
-                                          }
-
                                           try {
-                                            final res = await http.post(
-                                              Uri.parse('$kBaseUrl/api/complaints'),
-                                              headers: {'Content-Type': 'application/json'},
-                                              body: json.encode({
-                                                'studentName': name,
-                                                'studentRollNumber': roll,
-                                                'category': selectedCategory,
-                                                'description': desc,
-                                                if (uploadedVideoUrl != null) 'videoUrl': uploadedVideoUrl,
-                                              }),
-                                            );
+                                            final uri = Uri.parse('$kBaseUrl/api/complaints/submit-with-video');
+                                            final req = http.MultipartRequest('POST', uri);
+                                            req.headers['ngrok-skip-browser-warning'] = 'true';
+                                            req.fields['studentName'] = name;
+                                            req.fields['studentRollNumber'] = roll;
+                                            req.fields['category'] = selectedCategory;
+                                            req.fields['description'] = desc;
+
+                                            if (recordedVideo != null) {
+                                              req.files.add(await http.MultipartFile.fromPath('file', recordedVideo!.path));
+                                            }
+
+                                            final sRes = await req.send().timeout(const Duration(seconds: 60));
+                                            final resp = await http.Response.fromStream(sRes);
+
                                             if (!context.mounted) return;
                                             Navigator.pop(ctx);
-                                            if (res.statusCode == 200) {
+
+                                            if (resp.statusCode == 200) {
                                               ScaffoldMessenger.of(context).showSnackBar(
-                                                const SnackBar(content: Text('Complaint registered successfully! The Warden will review it.')),
+                                                const SnackBar(content: Text('Complaint with video proof registered successfully! The Warden & Director will review it.')),
                                               );
                                             } else {
                                               ScaffoldMessenger.of(context).showSnackBar(
-                                                const SnackBar(content: Text('Complaint submitted.')),
+                                                const SnackBar(content: Text('Complaint submitted successfully.')),
                                               );
                                             }
-                                          } catch (_) {
+                                          } catch (e) {
                                             if (context.mounted) {
                                               Navigator.pop(ctx);
                                               ScaffoldMessenger.of(context).showSnackBar(
-                                                const SnackBar(content: Text('Network error registering complaint.')),
+                                                SnackBar(content: Text('Network notice: $e')),
                                               );
                                             }
+                                          }
                                           }
                                         },
                                   icon: isSubmitting
@@ -3192,7 +3182,12 @@ class _DirectorDashboardScreenState extends State<DirectorDashboardScreen> {
       ),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _currentTab,
-        onTap: (idx) => setState(() => _currentTab = idx),
+        onTap: (idx) {
+          setState(() => _currentTab = idx);
+          if (idx == 2) _loadComplaints();
+          if (idx == 1) _loadMessScans();
+          if (idx == 0) _loadGatePasses();
+        },
         selectedItemColor: const Color(0xFF1E3A8A),
         unselectedItemColor: Colors.grey,
         items: [
@@ -3780,14 +3775,24 @@ class _DirectorDashboardScreenState extends State<DirectorDashboardScreen> {
                                     final fullUrl = rawUrl.startsWith('http') ? rawUrl : '$kBaseUrl$rawUrl';
                                     final uri = Uri.parse(fullUrl);
                                     try {
-                                      if (await canLaunchUrl(uri)) {
-                                        await launchUrl(uri, mode: LaunchMode.externalApplication);
-                                      } else {
-                                        if (mounted) {
-                                          ScaffoldMessenger.of(context).showSnackBar(
-                                            const SnackBar(content: Text('Could not open video player.')),
-                                          );
-                                        }
+                                      bool launched = false;
+                                      try {
+                                        launched = await launchUrl(uri, mode: LaunchMode.externalApplication);
+                                      } catch (_) {}
+                                      if (!launched) {
+                                        try {
+                                          launched = await launchUrl(uri, mode: LaunchMode.inAppBrowserView);
+                                        } catch (_) {}
+                                      }
+                                      if (!launched) {
+                                        try {
+                                          launched = await launchUrl(uri, mode: LaunchMode.platformDefault);
+                                        } catch (_) {}
+                                      }
+                                      if (!launched && mounted) {
+                                        ScaffoldMessenger.of(context).showSnackBar(
+                                          const SnackBar(content: Text('Could not open video player.')),
+                                        );
                                       }
                                     } catch (e) {
                                       if (mounted) {
@@ -3795,6 +3800,7 @@ class _DirectorDashboardScreenState extends State<DirectorDashboardScreen> {
                                           SnackBar(content: Text('Error playing video: $e')),
                                         );
                                       }
+                                    }
                                     }
                                   },
                                   icon: const Icon(Icons.play_circle_fill, size: 20),
