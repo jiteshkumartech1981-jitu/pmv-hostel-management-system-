@@ -1,0 +1,4 @@
+storePassword=YourKeystorePasswordHere
+keyPassword=YourKeyPasswordHere
+keyAlias=YourKeyAliasHere
+storeFile=your_release_keystore.jks

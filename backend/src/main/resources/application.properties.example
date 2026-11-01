@@ -1,0 +1,14 @@
+# Example Spring Boot Configuration
+spring.application.name=hosteldashboard
+spring.datasource.url=jdbc:mysql://localhost:3306/hosteldashboard_db
+spring.datasource.username=root
+spring.datasource.password=your_mysql_password_here
+
+spring.jpa.hibernate.ddl-auto=update
+spring.jpa.show-sql=true
+jwt.secret=ThisIsACollegeDemoJwtSecretKey32BytesMin!!
+jwt.expiration-ms=86400000
+
+# File Upload Limit
+spring.servlet.multipart.max-file-size=50MB
+spring.servlet.multipart.max-request-size=50MB
