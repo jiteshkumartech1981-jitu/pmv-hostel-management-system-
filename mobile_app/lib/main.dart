@@ -1,4 +1,4 @@
-﻿import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
 import 'package:http/http.dart' as http;
@@ -119,14 +119,14 @@ class RoleSelectionScreen extends StatelessWidget {
               const SizedBox(height: 16),
               _roleCard(
                 title: 'Administration & Staff Portal',
-                subtitle: 'Hostel Director ΓÇó Warden ΓÇó Gate Guard',
+                subtitle: 'Hostel Director • Warden • Gate Guard',
                 icon: Icons.admin_panel_settings,
                 color: const Color(0xFF7C3AED),
                 onTap: () => Navigator.push(context,
                     MaterialPageRoute(builder: (_) => const StaffLoginScreen())),
               ),
               const SizedBox(height: 36),
-              const Text('┬⌐ PMV Hostel. All rights reserved.',
+              const Text('© PMV Hostel. All rights reserved.',
                   style: TextStyle(color: Colors.grey, fontSize: 11)),
               const SizedBox(height: 10),
               Column(
@@ -697,7 +697,7 @@ class _StudentOtpScreenState extends State<StudentOtpScreen> {
               const SizedBox(height: 16),
               TextButton(
                 onPressed: () => Navigator.pop(context),
-                child: const Text('ΓåÉ Go Back (Change Roll Number)'),
+                child: const Text('← Go Back (Change Roll Number)'),
               ),
             ],
           ),
@@ -1058,9 +1058,9 @@ class _StaffLoginScreenState extends State<StaffLoginScreen> {
 
   // Authorized Staff & Admin accounts
   final List<Map<String, String>> _staffOptions = [
-    {'label': '≡ƒÄô Director: Vijay Rana', 'username': 'director1'},
-    {'label': '≡ƒì╜∩╕Å Mess Admin: Jitesh Kumar', 'username': 'messadmin'},
-    {'label': '≡ƒæ« Gate Guard', 'username': 'guard'},
+    {'label': '🎓 Director: Vijay Rana', 'username': 'director1'},
+    {'label': '🍽️ Mess Admin: Jitesh Kumar', 'username': 'messadmin'},
+    {'label': '👮 Gate Guard', 'username': 'guard'},
   ];
 
   String _selectedUsername = 'director1';
@@ -1204,22 +1204,22 @@ class _StaffLoginScreenState extends State<StaffLoginScreen> {
                                       Text('How to login as Admin/Staff:',
                                           style: TextStyle(fontWeight: FontWeight.bold)),
                                       SizedBox(height: 10),
-                                      Text('1∩╕ÅΓâú  Select your role from the dropdown below.'),
+                                      Text('1️⃣  Select your role from the dropdown below.'),
                                       SizedBox(height: 6),
-                                      Text('2∩╕ÅΓâú  Tap "Send OTP" ΓÇô an OTP will be sent to your registered mobile number.'),
+                                      Text('2️⃣  Tap "Send OTP" – an OTP will be sent to your registered mobile number.'),
                                       SizedBox(height: 6),
-                                      Text('3∩╕ÅΓâú  Enter the 6-digit OTP to verify your identity.'),
+                                      Text('3️⃣  Enter the 6-digit OTP to verify your identity.'),
                                       SizedBox(height: 6),
-                                      Text('4∩╕ÅΓâú  Enter your password to complete login.'),
+                                      Text('4️⃣  Enter your password to complete login.'),
                                       SizedBox(height: 14),
                                       Divider(),
                                       SizedBox(height: 6),
                                       Text('Admin Roles & Access:',
                                           style: TextStyle(fontWeight: FontWeight.bold)),
                                       SizedBox(height: 6),
-                                      Text('≡ƒÄô Hostel Director & Management: Vijay Rana (7015821282)'),
-                                      Text('≡ƒì╜∩╕Å Mess Admin & Super Admin: Jitesh Kumar (7079232001)'),
-                                      Text('≡ƒæ« Gate Guard (Main Entrance)'),
+                                      Text('🎓 Hostel Director & Management: Vijay Rana (7015821282)'),
+                                      Text('🍽️ Mess Admin & Super Admin: Jitesh Kumar (7079232001)'),
+                                      Text('👮 Gate Guard (Main Entrance)'),
                                       SizedBox(height: 14),
                                       Divider(),
                                       SizedBox(height: 6),
@@ -1302,7 +1302,7 @@ class _StaffLoginScreenState extends State<StaffLoginScreen> {
               ),
               const SizedBox(height: 16),
               const Text(
-                '┬⌐ PMV Hostel Management System',
+                '© PMV Hostel Management System',
                 style: TextStyle(color: Colors.grey, fontSize: 11),
                 textAlign: TextAlign.center,
               ),
@@ -1548,7 +1548,7 @@ class _StaffOtpScreenState extends State<StaffOtpScreen> {
               const SizedBox(height: 4),
               TextButton(
                 onPressed: () => Navigator.pop(context),
-                child: const Text('ΓåÉ Go Back'),
+                child: const Text('← Go Back'),
               ),
             ],
           ),
@@ -1830,7 +1830,7 @@ class StudentDashboardScreen extends StatelessWidget {
     if (!context.mounted) return;
     Navigator.pop(context); // Close loading spinner
 
-    final mealIcons = {'BREAKFAST': '≡ƒîà', 'LUNCH': 'ΓÿÇ∩╕Å', 'SNACK': '≡ƒì╡', 'DINNER': '≡ƒîÖ'};
+    final mealIcons = {'BREAKFAST': '🌅', 'LUNCH': '☀️', 'SNACK': '🍵', 'DINNER': '🌙'};
     final defaultTimings = {
       'BREAKFAST': {'start': '08:00', 'end': '09:30'},
       'LUNCH': {'start': '12:15', 'end': '14:15'},
@@ -2001,7 +2001,7 @@ class StudentDashboardScreen extends StatelessWidget {
                           children: [
                             Row(
                               children: [
-                                Text('${mealIcons[meal] ?? '≡ƒì╜∩╕Å'} $meal',
+                                Text('${mealIcons[meal] ?? '🍽️'} $meal',
                                     style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 15, color: Color(0xFF92400E))),
                                 const Spacer(),
                                 Container(
@@ -2102,14 +2102,14 @@ class StudentDashboardScreen extends StatelessWidget {
               const SizedBox(height: 8),
               Text(
                 selectedRating == 5
-                    ? 'Excellent Γ¡ÉΓ¡ÉΓ¡ÉΓ¡ÉΓ¡É'
+                    ? 'Excellent ⭐⭐⭐⭐⭐'
                     : selectedRating == 4
-                        ? 'Good Γ¡ÉΓ¡ÉΓ¡ÉΓ¡É'
+                        ? 'Good ⭐⭐⭐⭐'
                         : selectedRating == 3
-                            ? 'Average Γ¡ÉΓ¡ÉΓ¡É'
+                            ? 'Average ⭐⭐⭐'
                             : selectedRating == 2
-                                ? 'Poor Γ¡ÉΓ¡É'
-                                : 'Very Bad Γ¡É',
+                                ? 'Poor ⭐⭐'
+                                : 'Very Bad ⭐',
                 style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 13, color: Color(0xFFD97706)),
               ),
             ],
@@ -2333,7 +2333,7 @@ class StudentDashboardScreen extends StatelessWidget {
                               ],
                               const SizedBox(height: 4),
                               const Text(
-                                'Γä╣∩╕Å Short proof (max 20s). Auto-deletes 24 hrs after review.',
+                                'ℹ️ Short proof (max 20s). Auto-deletes 24 hrs after review.',
                                 style: TextStyle(fontSize: 10, color: Colors.grey),
                               ),
                               const SizedBox(height: 12),
@@ -2354,7 +2354,7 @@ class StudentDashboardScreen extends StatelessWidget {
                                           setFormState(() => isSubmitting = true);
 
                                           try {
-                                            final uri = Uri.parse('/api/complaints/submit-with-video');
+                                            final uri = Uri.parse('$kBaseUrl/api/complaints/submit-with-video');
                                             final req = http.MultipartRequest('POST', uri);
                                             req.headers['ngrok-skip-browser-warning'] = 'true';
                                             req.fields['studentName'] = name;
@@ -2385,7 +2385,7 @@ class StudentDashboardScreen extends StatelessWidget {
                                             if (context.mounted) {
                                               Navigator.pop(ctx);
                                               ScaffoldMessenger.of(context).showSnackBar(
-                                                SnackBar(content: Text('Network notice: ')),
+                                                SnackBar(content: Text('Network notice: $e')),
                                               );
                                             }
                                           }
@@ -2642,12 +2642,12 @@ class StudentDashboardScreen extends StatelessWidget {
                     ),
                     const SizedBox(height: 6),
                     const Text(
-                      'ΓÇó Gate pass permitted ONLY on Saturday & Sunday.\nΓÇó All students must return by 05:00 PM (17:00).\nΓÇó Approved solely by Hostel Director (Vijay Rana).',
+                      '• Gate pass permitted ONLY on Saturday & Sunday.\n• All students must return by 05:00 PM (17:00).\n• Approved solely by Hostel Director (Vijay Rana).',
                       style: TextStyle(fontSize: 11, color: Colors.black87, height: 1.4),
                     ),
                     const Divider(height: 12),
                     const Text(
-                      '≡ƒÜ¿ Emergency Notice:\nFor urgent weekday leave, contact Hostel Director Vijay Rana directly at 7015821282.',
+                      '🚨 Emergency Notice:\nFor urgent weekday leave, contact Hostel Director Vijay Rana directly at 7015821282.',
                       style: TextStyle(fontSize: 11, fontWeight: FontWeight.w600, color: Color(0xFFB91C1C)),
                     ),
                   ],
@@ -2834,7 +2834,7 @@ class StudentDashboardScreen extends StatelessWidget {
                     Text('Roll No: $roll', style: const TextStyle(color: Colors.white70, fontSize: 14)),
                     const SizedBox(height: 4),
                     if (branch.isNotEmpty)
-                      Text('$branch ΓÇó Year $year',
+                      Text('$branch • Year $year',
                           style: const TextStyle(color: Colors.white, fontSize: 13, fontWeight: FontWeight.w600),
                           textAlign: TextAlign.center),
                     const SizedBox(height: 4),
@@ -2941,7 +2941,7 @@ class StudentDashboardScreen extends StatelessWidget {
                     ],
                   ),
                   const SizedBox(height: 8),
-                  const Text('ΓÇó Boys Hostel: Block 1, Block 2, Block 3, Block 4\nΓÇó Girls Hostel: Building G1\nΓÇó Official Website: puranmurti.com',
+                  const Text('• Boys Hostel: Block 1, Block 2, Block 3, Block 4\n• Girls Hostel: Building G1\n• Official Website: puranmurti.com',
                       style: TextStyle(fontSize: 12, color: Colors.black87, height: 1.4)),
                   const Divider(height: 14),
                   const Row(
@@ -2950,7 +2950,7 @@ class StudentDashboardScreen extends StatelessWidget {
                       SizedBox(width: 6),
                       Expanded(
                         child: Text(
-                          '≡ƒÅ¢∩╕Å Chairman: Vijay Pal Nain\n≡ƒÄô Hostel Director: Vijay Rana (7015821282)\n≡ƒì╜∩╕Å Mess Admin: Jitesh Kumar (7079232001)',
+                          '🏛️ Chairman: Vijay Pal Nain\n🎓 Hostel Director: Vijay Rana (7015821282)\n🍽️ Mess Admin: Jitesh Kumar (7079232001)',
                           style: TextStyle(fontSize: 11, color: Colors.black87, fontWeight: FontWeight.w500, height: 1.4),
                         ),
                       ),
@@ -3095,7 +3095,7 @@ class _DirectorDashboardScreenState extends State<DirectorDashboardScreen> {
       );
       if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Gate Pass Approved! Γ£à')));
+          const SnackBar(content: Text('Gate Pass Approved! ✅')));
       _loadGatePasses().then((_) {
         if (mounted) setState(() {});
       });
@@ -3110,7 +3110,7 @@ class _DirectorDashboardScreenState extends State<DirectorDashboardScreen> {
       );
       if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Gate Pass Rejected! Γ¥î')));
+          const SnackBar(content: Text('Gate Pass Rejected! ❌')));
       _loadGatePasses().then((_) {
         if (mounted) setState(() {});
       });
@@ -3364,10 +3364,10 @@ class _DirectorDashboardScreenState extends State<DirectorDashboardScreen> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text('≡ƒòÆ Outing: Exit $exitTime ΓåÆ Return $returnTime',
+                      Text('🕒 Outing: Exit $exitTime → Return $returnTime',
                           style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w600)),
                       const SizedBox(height: 4),
-                      Text('≡ƒô¥ Reason: $reason', style: const TextStyle(fontSize: 13, color: Colors.black87)),
+                      Text('📝 Reason: $reason', style: const TextStyle(fontSize: 13, color: Colors.black87)),
                     ],
                   ),
                 ),
@@ -3462,7 +3462,7 @@ class _DirectorDashboardScreenState extends State<DirectorDashboardScreen> {
                           Text('Roll No: $roll', style: const TextStyle(fontSize: 13, color: Colors.black87)),
                           if (mobile.isNotEmpty) ...[
                             const SizedBox(height: 2),
-                            Text('≡ƒô▒ Mobile: +91 $mobile',
+                            Text('📱 Mobile: +91 $mobile',
                                 style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w600, color: Color(0xFF1E3A8A))),
                           ],
                         ],
@@ -3490,7 +3490,7 @@ class _DirectorDashboardScreenState extends State<DirectorDashboardScreen> {
                     children: [
                       const Icon(Icons.access_time, size: 14, color: Colors.grey),
                       const SizedBox(width: 6),
-                      Text('Exit: $exitTime  ΓÇó  Return: $returnTime',
+                      Text('Exit: $exitTime  •  Return: $returnTime',
                           style: const TextStyle(fontSize: 12, color: Colors.black87)),
                     ],
                   ),
@@ -3594,7 +3594,7 @@ class _DirectorDashboardScreenState extends State<DirectorDashboardScreen> {
                             const SizedBox(height: 4),
                             Text('Roll No: $roll', style: const TextStyle(fontSize: 13, color: Colors.black87)),
                             if (mobile.isNotEmpty)
-                              Text('≡ƒô▒ Mobile: +91 $mobile',
+                              Text('📱 Mobile: +91 $mobile',
                                   style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w600, color: Color(0xFF1E3A8A))),
                           ],
                         ),
@@ -3715,7 +3715,7 @@ class _DirectorDashboardScreenState extends State<DirectorDashboardScreen> {
                                       Text('Roll No: $roll', style: const TextStyle(fontSize: 13, color: Colors.black87)),
                                       if (mobile.isNotEmpty) ...[
                                         const SizedBox(height: 2),
-                                        Text('≡ƒô▒ Mobile: +91 $mobile',
+                                        Text('📱 Mobile: +91 $mobile',
                                             style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w600, color: Color(0xFF1E3A8A))),
                                       ],
                                     ],
@@ -3797,7 +3797,7 @@ class _DirectorDashboardScreenState extends State<DirectorDashboardScreen> {
                                     } catch (e) {
                                       if (mounted) {
                                         ScaffoldMessenger.of(context).showSnackBar(
-                                          SnackBar(content: Text('Error playing video: ')),
+                                          SnackBar(content: Text('Error playing video: $e')),
                                         );
                                       }
                                     }
@@ -3815,7 +3815,7 @@ class _DirectorDashboardScreenState extends State<DirectorDashboardScreen> {
                               const SizedBox(height: 4),
                               const Center(
                                 child: Text(
-                                  'Γä╣∩╕Å Video will auto-delete in 24-48 hours after being viewed.',
+                                  'ℹ️ Video will auto-delete in 24-48 hours after being viewed.',
                                   style: TextStyle(fontSize: 10, color: Colors.grey),
                                 ),
                               ),
@@ -3856,7 +3856,7 @@ class _DirectorDashboardScreenState extends State<DirectorDashboardScreen> {
                                   ElevatedButton.icon(
                                     onPressed: () => _updateComplaintStatus(id, 'Resolved'),
                                     icon: const Icon(Icons.check_circle_outline, size: 16),
-                                    label: const Text('Resolve Γ£à'),
+                                    label: const Text('Resolve ✅'),
                                     style: ElevatedButton.styleFrom(
                                       backgroundColor: const Color(0xFF16A34A),
                                       foregroundColor: Colors.white,
@@ -4197,13 +4197,13 @@ class _LiveQrScannerScreenState extends State<LiveQrScannerScreen> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       const Text('Meal: ', style: TextStyle(color: Colors.white70, fontSize: 12)),
-                      _mealChip('BREAKFAST', '≡ƒîà'),
+                      _mealChip('BREAKFAST', '🌅'),
                       const SizedBox(width: 4),
-                      _mealChip('LUNCH', 'ΓÿÇ∩╕Å'),
+                      _mealChip('LUNCH', '☀️'),
                       const SizedBox(width: 4),
-                      _mealChip('SNACK', '≡ƒì╡'),
+                      _mealChip('SNACK', '🍵'),
                       const SizedBox(width: 4),
-                      _mealChip('DINNER', '≡ƒîÖ'),
+                      _mealChip('DINNER', '🌙'),
                     ],
                   ),
                 ],
@@ -4264,7 +4264,7 @@ class _LiveQrScannerScreenState extends State<LiveQrScannerScreen> {
                             ),
                             const SizedBox(height: 2),
                             Text(
-                              'Roll: $_studentRoll  ΓÇó  Time: $_scanTimestamp',
+                              'Roll: $_studentRoll  •  Time: $_scanTimestamp',
                               style: const TextStyle(color: Colors.white70, fontSize: 12),
                             ),
                           ],
